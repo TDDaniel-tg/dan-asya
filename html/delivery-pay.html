@@ -8,49 +8,49 @@
     <link rel="stylesheet" href="/css/orders.css">
 </head>
 <body>
- <!-- ХЭДЕР -->
- <header class="header">
-  <div class="burger" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-
-  <div class="logo">
-    <img src="logo.png" alt="Frag Store" />
-  </div>
-
-  <nav class="navigation">
-    <a href="/">Главная</a>
-    <a href="catalog-all.html">Каталог</a>
-    <div class="pages-menu" id="pagesMenu">
-      <a href="#">Страницы</a>
-      <div class="dropdown">
-        <a href="about.html">О нас</a>
-        <a href="how-to-order.html">Как сделать заказ</a>
-        <a href="delivery-pay.html">Доставка и оплата</a>
+  <header class="header">
+    <div class="burger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  
+    <div class="logo">
+      <img src="logo.png" alt="Frag Store" />
+    </div>
+  
+    <nav class="navigation">
+      <a href="/">Главная</a>
+      <a href="catalog-all.html">Каталог</a>
+      <div class="pages-menu" id="pagesMenu">
+        <a href="#">Страницы</a>
+        <div class="dropdown">
+          <a href="about.html">О нас</a>
+          <a href="how-to-order.html">Как сделать заказ</a>
+          <a href="delivery-pay.html">Доставка и оплата</a>
+        </div>
+      </div>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  
+    <!-- Новый контейнер для иконок, который позиционируется справа -->
+    <div class="header-right">
+      <div class="icons" id="login-container">
+        <!-- По умолчанию показываем ссылку "Войти" -->
+        <a href="login.html" class="icon login-icon">Войти</a>
+      </div>
+      <div class="icons">
+        <div class="icon search-icon" onclick="toggleSearch()">🔍</div>
+        <a href="cart.html" class="icon cart-icon">🛒</a>
       </div>
     </div>
-    <a href="contacts.html">Контакты</a>
-  </nav>
-
-  <!-- Новый контейнер для иконок, который позиционируется справа -->
-  <div class="header-right">
-    <div class="icons" id="login-container">
-      <!-- По умолчанию показываем ссылку "Войти" -->
-      <a href="login.html" class="icon login-icon">Войти</a>
+  
+    <!-- Поле поиска -->
+    <div class="search-bar hidden" id="searchBar">
+      <input type="text" placeholder="Поиск..." />
     </div>
-    <div class="icons">
-      <div class="icon search-icon" onclick="toggleSearch()">🔍</div>
-      <a href="cart.html" class="icon cart-icon">🛒</a>
-    </div>
-  </div>
+  </header>
 
-  <!-- Поле поиска -->
-  <div class="search-bar hidden" id="searchBar">
-    <input type="text" placeholder="Поиск..." />
-  </div>
-</header>
   
 <script>
   // Функция переключения мобильного меню
