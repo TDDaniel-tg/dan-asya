@@ -1,158 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/basket.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Корзина</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/basket.css" />
 </head>
 <body>
+  <!-- ХЭДЕР -->
+  <header class="header">
+    <div class="burger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
 
-     <!-- ХЭДЕР -->
-     <header class="header">
-      <div class="burger" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    
-      <div class="logo">
-        <img src="logo.png" alt="Frag Store" />
-      </div>
-    
-      <nav class="navigation">
-        <a href="/">Главная</a>
-        <a href="catalog-all.html">Каталог</a>
-        <div class="pages-menu" id="pagesMenu">
-          <a href="#">Страницы</a>
-          <div class="dropdown">
-            <a href="about.html">О нас</a>
-            <a href="how-to-order.html">Как сделать заказ</a>
-            <a href="delivery-pay.html">Доставка и оплата</a>
-          </div>
-        </div>
-        <a href="contacts.html">Контакты</a>
-      </nav>
-    
-      <!-- Новый контейнер для иконок, который позиционируется справа -->
-      <div class="header-right">
-        <div class="icons" id="login-container">
-          <!-- По умолчанию показываем ссылку "Войти" -->
-          <a href="login.html" class="icon login-icon">Войти</a>
-        </div>
-        <div class="icons">
-          <div class="icon search-icon" onclick="toggleSearch()">🔍</div>
-          <a href="cart.html" class="icon cart-icon">🛒</a>
-        </div>
-      </div>
-    
-      <!-- Поле поиска -->
-      <div class="search-bar hidden" id="searchBar">
-        <input type="text" placeholder="Поиск..." />
-      </div>
-    </header>
-  
-    <script>
-      // Функция переключения мобильного меню
-      function toggleMenu() {
-        const burger = document.querySelector('.burger');
-        const mobileNav = document.querySelector('.mobile-nav');
-        burger.classList.toggle('open');
-        if (mobileNav) mobileNav.classList.toggle('active');
-      }
-    
-      // Переключение подменю "Страницы"
-      const pagesMenu = document.getElementById('pagesMenu');
-      pagesMenu.addEventListener('click', (event) => {
-        event.stopPropagation();
-        pagesMenu.classList.toggle('open');
-      });
-      document.addEventListener('click', () => {
-        pagesMenu.classList.remove('open');
-      });
-    
-      // Переключение строки поиска
-      function toggleSearch() {
-        const searchBar = document.getElementById('searchBar');
-        searchBar.classList.toggle('hidden');
-      }
-    
-      // Функция для выхода (удаление токена и перенаправление на главную)
-      function logout() {
-        localStorage.removeItem('token');
-        // Можно добавить дополнительные действия, например, очистку пользовательских данных
-        window.location.href = '/';
-      }
-    
-      // Проверка аутентификации: если токен есть, заменяем блок авторизации на ссылку в личный кабинет с кнопкой "Выйти"
-      document.addEventListener('DOMContentLoaded', () => {
-        const token = localStorage.getItem('token');
-        const loginContainer = document.getElementById('login-container');
-        if (token) {
-          loginContainer.innerHTML = `
-            <a href="private.html" class="icon user-icon">🙍‍♂️</a>
-            <button onclick="logout()" class="logout-btn">Выйти</button>
-          `;
-        }
-      });
-    </script>
-    
-  <h1>Корзина</h1>
-  <div id="cart-items"></div>
-  <div id="total-price"></div>
+    <div class="logo">
+      <img src="logo.png" alt="Frag Store" />
+    </div>
 
-  <!-- Кнопка очистки корзины -->
-  <button id="clear-cart-btn">Очистить корзину</button>
+    <nav class="navigation">
+      <a href="/">Главная</a>
+      <!-- Если у вас файл каталога называется catalog.html, измените ссылку -->
+      <a href="catalog.html">Каталог</a>
+      <div class="pages-menu" id="pagesMenu">
+        <a href="#">Страницы</a>
+        <div class="dropdown">
+          <a href="about.html">О нас</a>
+          <a href="how-to-order.html">Как сделать заказ</a>
+          <a href="delivery-pay.html">Доставка и оплата</a>
+        </div>
+      </div>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+
+    <!-- Контейнер для иконок (вход/личный кабинет, поиск, корзина) -->
+    <div class="header-right">
+      <div class="icons" id="login-container">
+        <!-- По умолчанию показываем ссылку "Войти" -->
+        <a href="login.html" class="icon login-icon">Войти</a>
+      </div>
+      <div class="icons">
+        <div class="icon search-icon" onclick="toggleSearch()">🔍</div>
+        <a href="basket.html" class="icon cart-icon">🛒</a>
+      </div>
+    </div>
+
+    <!-- Поле поиска -->
+    <div class="search-bar hidden" id="searchBar">
+      <input type="text" placeholder="Поиск..." />
+    </div>
+  </header>
+
+  <main>
+    <h1>Корзина</h1>
+    <div id="cart-items"></div>
+    <div id="total-price"></div>
+    <!-- Кнопка очистки корзины -->
+    <button id="clear-cart-btn">Очистить корзину</button>
+  </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Загрузка товаров из корзины
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // Функция переключения мобильного меню
+    function toggleMenu() {
+      const burger = document.querySelector('.burger');
+      const mobileNav = document.querySelector('.mobile-nav');
+      burger.classList.toggle('open');
+      if (mobileNav) mobileNav.classList.toggle('active');
+    }
 
-        const cartItemsContainer = document.getElementById("cart-items");
-
-        if (cart.length === 0) {
-            cartItemsContainer.innerHTML = "<p>Ваша корзина пуста</p>";
-        } else {
-            // Отображаем товары в корзине
-            const cartItems = cart.map(item => `
-                <div class="cart-item">
-                    <img src="../images/${item.img}" alt="${item.name}">
-                    <h2>${item.name}</h2>
-                    <p>${item.description}</p>
-                    <p>Цена: ${item.price}₽</p>
-                </div>
-            `).join("");
-
-            cartItemsContainer.innerHTML = cartItems;
-
-            // Дополнительные операции с корзиной, например, расчет общей стоимости
-            const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
-            document.getElementById("total-price").innerHTML = `<p>Общая стоимость: ${totalPrice}₽</p>`;
-        }
-
-        // Кнопка очистки корзины
-        document.getElementById('clear-cart-btn').addEventListener('click', function () {
-            localStorage.removeItem('cart');
-            cartItemsContainer.innerHTML = "<p>Ваша корзина пуста</p>";
-            document.getElementById("total-price").innerHTML = "";
-        });
+    // Переключение подменю "Страницы"
+    const pagesMenu = document.getElementById('pagesMenu');
+    pagesMenu.addEventListener('click', (event) => {
+      event.stopPropagation();
+      pagesMenu.classList.toggle('open');
+    });
+    document.addEventListener('click', () => {
+      pagesMenu.classList.remove('open');
     });
 
     // Переключение строки поиска
     function toggleSearch() {
-        const searchBar = document.getElementById('searchBar');
-        searchBar.classList.toggle('hidden');
+      const searchBar = document.getElementById('searchBar');
+      searchBar.classList.toggle('hidden');
     }
 
-    // Функция для переключения отображения поиска
-    function toggleSearch() {
-        const searchBar = document.getElementById('searchBar');
-        const searchIcon = document.querySelector('.search-icon');
-        searchBar.classList.toggle('active'); // Показываем/скрываем поле ввода
-        searchIcon.classList.toggle('active'); // Двигаем иконку влево
+    // Функция для выхода (удаление токена и перенаправление на главную)
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = '/';
     }
+
+    // Проверка аутентификации: если токен есть, заменяем блок авторизации на ссылку в личный кабинет с кнопкой "Выйти"
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      const loginContainer = document.getElementById('login-container');
+      if (token) {
+        loginContainer.innerHTML = `
+          <a href="private.html" class="icon user-icon">🙍‍♂️</a>
+          <button onclick="logout()" class="logout-btn">Выйти</button>
+        `;
+      }
+    });
+
+    // Загрузка товаров для корзины
+    document.addEventListener("DOMContentLoaded", function () {
+      // Получаем массив идентификаторов товаров из localStorage
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = document.getElementById("cart-items");
+
+      // Если корзина пуста, выводим сообщение
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = "<p>Ваша корзина пуста</p>";
+        document.getElementById("total-price").innerHTML = "";
+      } else {
+        // Загружаем все товары с сервера
+        fetch('/api/products')
+          .then(response => response.json())
+          .then(products => {
+            // Фильтруем товары, оставляя только те, ID которых есть в корзине
+            const cartProducts = products.filter(product => cart.includes(product._id));
+            if (cartProducts.length === 0) {
+              cartItemsContainer.innerHTML = "<p>Ваша корзина пуста</p>";
+              document.getElementById("total-price").innerHTML = "";
+            } else {
+              // Формируем HTML для каждого товара
+              const cartItems = cartProducts.map(item => `
+                <div class="cart-item">
+                  <img src="${item.image}" alt="${item.name}">
+                  <div class="cart-item-info">
+                    <h2>${item.name}</h2>
+                    <p>${item.description}</p>
+                    <p>Цена: ${item.price}₽</p>
+                  </div>
+                </div>
+              `).join("");
+              cartItemsContainer.innerHTML = cartItems;
+
+              // Рассчитываем общую стоимость
+              const totalPrice = cartProducts.reduce((sum, item) => sum + Number(item.price), 0);
+              document.getElementById("total-price").innerHTML = `<p>Общая стоимость: ${totalPrice}₽</p>`;
+            }
+          })
+          .catch(error => {
+            console.error("Ошибка загрузки товаров:", error);
+            cartItemsContainer.innerHTML = "<p>Ошибка загрузки товаров</p>";
+          });
+      }
+
+      // Обработка нажатия кнопки "Очистить корзину"
+      document.getElementById('clear-cart-btn').addEventListener('click', function () {
+        localStorage.removeItem('cart');
+        cartItemsContainer.innerHTML = "<p>Ваша корзина пуста</p>";
+        document.getElementById("total-price").innerHTML = "";
+      });
+    });
   </script>
 </body>
 </html>

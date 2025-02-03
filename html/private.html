@@ -1,30 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Private Page</title>
   <link rel="stylesheet" href="/css/styles.css" />
-  <link rel="stylesheet" href="/css/orders.css" />
+  <link rel="stylesheet" href="/css/private.css" />
   <!-- Подключаем jwt-decode через CDN -->
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
-  <style>
-    /* Стили для админ-панели */
-    .admin-panel {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin: 20px;
-      display: none; /* Скрыто по умолчанию, показывается только для админа */
-    }
-    .logout-btn {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-  </style>
+  
 </head>
 <body>
   <!-- ХЭДЕР -->
@@ -41,7 +25,7 @@
   
     <nav class="navigation">
       <a href="/">Главная</a>
-      <a href="catalog-all.html">Каталог</a>
+      <a href="catalog.html">Каталог</a>
       <div class="pages-menu" id="pagesMenu">
         <a href="#">Страницы</a>
         <div class="dropdown">
@@ -53,10 +37,9 @@
       <a href="contacts.html">Контакты</a>
     </nav>
   
-    <!-- Новый контейнер для иконок, который позиционируется справа -->
+    <!-- Новый контейнер для иконок -->
     <div class="header-right">
       <div class="icons" id="login-container">
-        <!-- По умолчанию показываем ссылку "Войти" -->
         <a href="login.html" class="icon login-icon">Войти</a>
       </div>
       <div class="icons">
@@ -65,62 +48,60 @@
       </div>
     </div>
   
-    <!-- Поле поиска -->
     <div class="search-bar hidden" id="searchBar">
       <input type="text" placeholder="Поиск..." />
     </div>
   </header>
 
-
-  <!-- Основной контент -->
   <main>
     <section>
       <h1>Добро пожаловать в личный кабинет</h1>
-      <div id="userInfo">
-        <!-- Здесь выводится информация о пользователе -->
-      </div>
-      <p>Контент, доступный только авторизованным пользователям.</p>
+      <div id="userInfo"></div>
+      <p>SOOOON!!!</p>
     </section>
 
-    <!-- Админ-панель (отображается только если роль в токене – admin) -->
-    <div class="admin-panel" id="adminPanel">
-      <h2>Админ-панель</h2>
-      <p>Здесь можно добавлять и убирать товары.</p>
-      <!-- Пример формы для добавления товара -->
-      <form id="addProductForm">
-        <input type="text" name="productName" placeholder="Название товара" required />
-        <input type="number" name="productPrice" placeholder="Цена товара" required />
-        <button type="submit">Добавить товар</button>
-      </form>
+<!-- Админ-панель: Добавление товара -->
+<div class="admin-panel" id="adminAddPanel" style="display:none">
+  <h2>Админ-панель: Добавление товара</h2>
+  <form id="addProductForm" enctype="multipart/form-data">
+    <input type="text" name="productName" placeholder="Название товара" required />
+    <input type="number" name="productPrice" placeholder="Цена товара" required />
+    <textarea name="productDescription" placeholder="Описание товара" required></textarea>
+    <input type="file" name="productImage" accept="image/*" required />
+    <button type="submit" class="admin-btn">Добавить товар</button>
+  </form>
+</div>
+
+
+    <!-- Админ-панель: Список товаров с возможностью удаления -->
+    <div class="admin-panel" id="adminDeletePanel" style="display:none">
+      <h2>Админ-панель: Удаление товара</h2>
+      <div id="products-list"></div>
     </div>
   </main>
 
   <script>
-    // Функция переключения мобильного меню
+    // Функции для работы с меню и поиска
     function toggleMenu() {
       const burger = document.querySelector('.burger');
       const mobileNav = document.querySelector('.mobile-nav');
       burger.classList.toggle('open');
       if (mobileNav) mobileNav.classList.toggle('active');
     }
-
-    // Переключение подменю "Страницы"
     const pagesMenu = document.getElementById('pagesMenu');
-    pagesMenu.addEventListener('click', (event) => {
-      event.stopPropagation();
-      pagesMenu.classList.toggle('open');
-    });
-    document.addEventListener('click', () => {
-      pagesMenu.classList.remove('open');
-    });
-
-    // Переключение строки поиска
+    if (pagesMenu) {
+      pagesMenu.addEventListener('click', (event) => {
+        event.stopPropagation();
+        pagesMenu.classList.toggle('open');
+      });
+      document.addEventListener('click', () => {
+        pagesMenu.classList.remove('open');
+      });
+    }
     function toggleSearch() {
       const searchBar = document.getElementById('searchBar');
       searchBar.classList.toggle('hidden');
     }
-
-    // Функция для выхода
     function logout() {
       localStorage.removeItem('token');
       window.location.href = '/login.html';
@@ -131,25 +112,22 @@
       const token = localStorage.getItem('token');
       const loginContainer = document.getElementById('login-container');
       const userInfo = document.getElementById('userInfo');
-
       if (!token) {
-        // Если токена нет, перенаправляем на страницу логина
         window.location.href = '/login.html';
         return;
       }
-
       try {
         const decoded = jwt_decode(token);
-        userInfo.innerHTML = `<p>Добро пожаловать, пользователь с ID: ${decoded.id}</p>`;
-        // Обновляем блок авторизации
+        userInfo.innerHTML = `<p>Добро пожаловать в личный кабинет</p>`;
         loginContainer.innerHTML = `
           <a href="private.html" class="icon user-icon">🙍‍♂️</a>
           <button onclick="logout()" class="logout-btn">Выйти</button>
         `;
-
-        // Если пользователь админ, показываем админ-панель
+        // Если пользователь админ, показываем панели добавления и удаления
         if (decoded.role && decoded.role === 'admin') {
-          document.getElementById('adminPanel').style.display = 'block';
+          document.getElementById('adminAddPanel').style.display = 'block';
+          document.getElementById('adminDeletePanel').style.display = 'block';
+          loadProductsForDeletion();
         }
       } catch (error) {
         console.error('Ошибка декодирования токена:', error);
@@ -158,27 +136,26 @@
       }
     });
 
-    // Обработка формы добавления товара (пример)
+    // Обработка формы добавления товара с FormData
     const addProductForm = document.getElementById('addProductForm');
     if (addProductForm) {
       addProductForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const productName = e.target.productName.value;
-        const productPrice = e.target.productPrice.value;
         const token = localStorage.getItem('token');
-
+        const formData = new FormData(addProductForm);
         try {
-          const response = await fetch('/api/products', { // Замените на реальный endpoint для работы с товарами
+          const response = await fetch('/api/products', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ productName, productPrice })
+            body: formData
           });
           const result = await response.json();
           if (response.ok) {
             alert('Товар успешно добавлен!');
+            addProductForm.reset();
+            loadProductsForDeletion(); // Обновляем список товаров
           } else {
             alert('Ошибка при добавлении товара: ' + result.message);
           }
@@ -187,6 +164,60 @@
           alert('Произошла ошибка при добавлении товара.');
         }
       });
+    }
+
+    // Функция загрузки списка товаров для удаления (только для админа)
+    function loadProductsForDeletion() {
+      const token = localStorage.getItem('token');
+      fetch('/api/products', {
+        headers: { 'Authorization': `Bearer ${token}` } // если требуется авторизация
+      })
+      .then(response => response.json())
+      .then(products => {
+        const productsListContainer = document.getElementById('products-list');
+        if (products.length === 0) {
+          productsListContainer.innerHTML = "<p>Нет товаров для удаления</p>";
+        } else {
+          const productsHTML = products.map(product => `
+            <div class="product-item" data-id="${product._id}">
+              <img src="${product.image}" alt="${product.name}">
+              <div>
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <p>Цена: ${product.price}₽</p>
+              </div>
+              <button class="delete-btn" onclick="deleteProduct('${product._id}')">Удалить</button>
+            </div>
+          `).join("");
+          productsListContainer.innerHTML = productsHTML;
+        }
+      })
+      .catch(error => {
+        console.error("Ошибка загрузки товаров для удаления:", error);
+      });
+    }
+
+    // Функция удаления товара
+    async function deleteProduct(productId) {
+      const token = localStorage.getItem('token');
+      if (!confirm("Вы действительно хотите удалить этот товар?")) return;
+      try {
+        const response = await fetch(`/api/products/${productId}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const result = await response.json();
+        console.log("Ответ удаления товара:", result);
+        if (response.ok) {
+          alert('Товар удалён');
+          loadProductsForDeletion();
+        } else {
+          alert('Ошибка при удалении товара: ' + result.message);
+        }
+      } catch (error) {
+        console.error("Ошибка запроса на удаление:", error);
+        alert("Произошла ошибка при удалении товара.");
+      }
     }
   </script>
 </body>

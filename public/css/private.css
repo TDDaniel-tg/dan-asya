@@ -1,0 +1,67 @@
+/* Стили для админ-панели */
+.admin-panel {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 20px;
+    width: 600px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Расположение всех элементов формы вертикально */
+.admin-panel form input,
+.admin-panel form textarea,
+.admin-panel form button {
+    display: block;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Стили для полей ввода и textarea с явной границей (включая левую) */
+.admin-panel form input,
+.admin-panel form textarea {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+/* Отдельный класс для кнопки */
+.admin-btn {
+    background-color: #3498db; /* Пример цвета, можно изменить */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    border-radius: 15px;
+}
+
+.admin-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Стили для списка товаров */
+.product-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.product-item img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: auto;
+}
