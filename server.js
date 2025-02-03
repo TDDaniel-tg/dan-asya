@@ -63,8 +63,9 @@ const Product = mongoose.model("Product", ProductSchema);
 
 // Главная страница (например, index.html)
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "html", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
+
 
 // Регистрация
 app.post("/api/register", async (req, res) => {
