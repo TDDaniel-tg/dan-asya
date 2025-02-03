@@ -1,0 +1,344 @@
+/* Общий фон и структура */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #b4b4b4;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Контент должен занимать все доступное пространство */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* ====== ХЕДЕР ====== */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #111;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Логотип */
+.logo img {
+  max-height: 40px; /* при необходимости подберите нужное значение */
+}
+
+/* Навигация */
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Стили для каждой ссылки меню */
+.navigation a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 14px;
+  transition: color 0.3s;
+  text-align: center;
+}
+
+.navigation a:hover {
+  color: red;
+}
+
+/* Контейнер для "Страницы" и подменю */
+.pages-menu {
+  position: relative;
+  display: inline-block;
+}
+
+/* Скрыть подменю по умолчанию */
+.pages-menu .dropdown {
+  display: none;
+  position: absolute;
+  background-color: #111;
+  top: 100%;
+  left: 0;
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.pages-menu .dropdown a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+}
+
+.pages-menu .dropdown a:hover {
+  background: red;
+  border-radius: 11px;
+}
+
+/* Показываем подменю при наведении */
+.pages-menu:hover .dropdown {
+  display: block;
+}
+
+/* Новый контейнер для правой части хедера */
+.header-right {
+  margin-left: auto; /* Сдвигаем контейнер максимально вправо */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Иконки */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.icon:hover {
+  background-color: #d8d8d8;
+}
+
+/* Кнопка "Выйти" */
+.logout-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #111;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #d8d8d8;
+}
+
+/* Поле поиска */
+.search-bar.hidden {
+  width: 0;
+  opacity: 0;
+  transform: translateX(100%);
+  pointer-events: none;
+  position: absolute;
+  top: 10px;
+  right: 144px;
+  transition: width 2s ease, opacity 2s ease, transform 2s ease;
+  z-index: 1;
+}
+
+.search-bar.active {
+  width: 250px;
+  opacity: 1;
+  transform: translateX(-22px);
+  pointer-events: auto;
+  display: block;
+}
+
+.search-bar input {
+  left: 25px;
+  width: 200px;
+  padding: 12px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+/* Анимация для кнопки поиска */
+@keyframes rotate-search {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-icon {
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.search-icon.active {
+  animation: rotate-search 0.5s ease;
+}
+
+/* Футер */
+.footer {
+  background-color: #6c63ff;
+  color: white;
+  padding: 15px;
+  width: 100%;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.footer-btn {
+  background-color: white;
+  color: #6c63ff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.footer-btn:hover {
+  transform: scale(1.05);
+  background-color: #f5f5f5;
+}
+
+.footer-btn:active {
+  transform: scale(0.95);
+}
+
+/* Админ-панель (по умолчанию скрыта) */
+.admin-panel {
+  display: none;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Бургер-кнопка */
+.burger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+  transition: transform 0.3s ease;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: 0.3s ease;
+}
+
+.burger.open {
+  transform: rotate(90deg);
+}
+
+/* Мобильное меню */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  background: #111;
+  width: 200px;
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+}
+
+.mobile-nav a:hover {
+  background: red;
+}
+
+.mobile-nav.active {
+  display: flex;
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 450px) {
+  .header {
+    height: 37px;
+    padding: 10px 20px;
+  }
+
+  .navigation {
+    display: none;
+  }
+
+  .burger {
+    margin-left: 10px;
+    display: flex;
+    position: absolute;
+    left: 10px;
+  }
+
+  .header-right {
+    position: absolute;
+    right: 20px;
+  }
+
+  .icons {
+    font-size: 13px;
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .search-bar.hidden {
+    top: 4px;
+  }
+
+  .search-bar.active {
+    width: 150px;
+  }
+
+  .search-bar input {
+    left: 20px;
+    width: 130px;
+    padding: 7px;
+  }
+
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

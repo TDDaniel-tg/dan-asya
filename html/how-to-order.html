@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/orders.css">
+</head>
+<body>
+ <!-- ХЭДЕР -->
+ <header class="header">
+  <div class="burger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="logo">
+    <img src="logo.png" alt="Frag Store" />
+  </div>
+
+  <nav class="navigation">
+    <a href="/">Главная</a>
+    <a href="catalog-all.html">Каталог</a>
+    <div class="pages-menu" id="pagesMenu">
+      <a href="#">Страницы</a>
+      <div class="dropdown">
+        <a href="about.html">О нас</a>
+        <a href="how-to-order.html">Как сделать заказ</a>
+        <a href="delivery-pay.html">Доставка и оплата</a>
+      </div>
+    </div>
+    <a href="contacts.html">Контакты</a>
+  </nav>
+
+  <!-- Новый контейнер для иконок, который позиционируется справа -->
+  <div class="header-right">
+    <div class="icons" id="login-container">
+      <!-- По умолчанию показываем ссылку "Войти" -->
+      <a href="login.html" class="icon login-icon">Войти</a>
+    </div>
+    <div class="icons">
+      <div class="icon search-icon" onclick="toggleSearch()">🔍</div>
+      <a href="cart.html" class="icon cart-icon">🛒</a>
+    </div>
+  </div>
+
+  <!-- Поле поиска -->
+  <div class="search-bar hidden" id="searchBar">
+    <input type="text" placeholder="Поиск..." />
+  </div>
+</header>
+  
+<script>
+  // Функция переключения мобильного меню
+  function toggleMenu() {
+    const burger = document.querySelector('.burger');
+    const mobileNav = document.querySelector('.mobile-nav');
+    burger.classList.toggle('open');
+    if (mobileNav) mobileNav.classList.toggle('active');
+  }
+
+  // Переключение подменю "Страницы"
+  const pagesMenu = document.getElementById('pagesMenu');
+  pagesMenu.addEventListener('click', (event) => {
+    event.stopPropagation();
+    pagesMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', () => {
+    pagesMenu.classList.remove('open');
+  });
+
+  // Переключение строки поиска
+  function toggleSearch() {
+    const searchBar = document.getElementById('searchBar');
+    searchBar.classList.toggle('hidden');
+  }
+
+  // Функция для выхода (удаление токена и перенаправление на главную)
+  function logout() {
+    localStorage.removeItem('token');
+    // Можно добавить дополнительные действия, например, очистку пользовательских данных
+    window.location.href = '/';
+  }
+
+  // Проверка аутентификации: если токен есть, заменяем блок авторизации на ссылку в личный кабинет с кнопкой "Выйти"
+  document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    const loginContainer = document.getElementById('login-container');
+    if (token) {
+      loginContainer.innerHTML = `
+        <a href="private.html" class="icon user-icon">🙍‍♂️</a>
+        <button onclick="logout()" class="logout-btn">Выйти</button>
+      `;
+    }
+  });
+</script>
+</body>
+</html>

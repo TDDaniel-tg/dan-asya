@@ -1,0 +1,94 @@
+
+/* Заголовок корзины */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 36px;
+    color: #2c3e50;
+}
+
+/* Контейнер для всех товаров в корзине */
+#cart-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/* Стиль для карточки товара в корзине */
+.cart-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 250px; /* Устанавливаем одинаковую ширину для карточек */
+    text-align: center;
+}
+
+.cart-item img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.cart-item h2 {
+    font-size: 20px;
+    color: #34495e;
+    margin: 0;
+}
+
+.cart-item p {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 5px 0;
+}
+
+/* Стиль для блока с общей стоимостью */
+#total-price {
+    margin-top: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #e74c3c;
+}
+
+/* Стиль для кнопки очистки корзины */
+#clear-cart-btn {
+    margin-left: 50%;
+    transform: translatex(-50%);
+    display: block;
+    width: 200px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#clear-cart-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Стиль для пустой корзины */
+#cart-items {
+    text-align: center;
+    font-size: 18px;
+    color: #95a5a6;
+}
+
+/* Мобильная адаптивность */
+@media (max-width: 768px) {
+    .cart-item {
+        width: 100%; /* Сделаем карточки на мобильных устройствах занимать всю ширину экрана */
+        margin-bottom: 15px;
+    }
+}
